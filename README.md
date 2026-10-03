@@ -56,4 +56,4 @@ Riktig autentisering sedan M6: e-post + lösenord mot Kraftlys API v2, access to
     npm run e2e:pw     # E2E-smoke (Playwright) – kräver npx playwright install chromium
     npm run build      # produktionsbygge till dist/
 
-Prestanda och budgeten i CI: `docs/performance.md`. Pipeline och beslut: se `docs/pipeline.md`, `docs/containers.md`, `docs/deploy.md`, `docs/decisions/`.
+Prestanda och budgeten i CI: `docs/performance.md`. Tillgänglighet, komponentbiblioteket (`KButton`, `KField`) och tangentbordsgenomgången: `docs/accessibility.md`. Pipeline och beslut: se `docs/pipeline.md`, `docs/containers.md`, `docs/deploy.md`, `docs/decisions/`.
