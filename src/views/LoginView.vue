@@ -1,7 +1,7 @@
 <template>
   <div class="login-wrap">
     <form class="card login-card" novalidate @submit.prevent="handleLogin">
-      <img src="../assets/logo-dark.svg" class="login-logo">
+      <img src="../assets/logo-dark.svg" class="login-logo" alt="Kraftly">
       <h1>Logga in på Mina sidor</h1>
       <KField v-model="email" label="E-postadress" type="email" autocomplete="username" />
       <KField v-model="password" label="Lösenord" type="password" autocomplete="current-password" />
