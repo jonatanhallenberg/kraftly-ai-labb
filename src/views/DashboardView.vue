@@ -86,6 +86,6 @@ const showTips = () => {
 .hero { width: 100%; height: auto; border-radius: 10px; margin-bottom: 18px; }
 .chart-box { aspect-ratio: 2 / 1; }
 .stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
-.stat-label { font-size: 13px; color: #7c8698; margin-bottom: 6px; }
+.stat-label { font-size: 13px; color: #5c6679; margin-bottom: 6px; }
 .stat-value { font-size: 26px; font-weight: 700; }
 </style>

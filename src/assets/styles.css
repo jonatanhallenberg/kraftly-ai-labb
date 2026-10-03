@@ -55,11 +55,11 @@ input, select {
   background: #fff;
 }
 
-.hint { color: #b8c0cf; font-size: 12px; }
+.hint { color: #5c6679; font-size: 12px; } /* var #b8c0cf = 1,8:1 mot vitt; nu 5,8:1 (krav 4,5:1) */
 
 table { width: 100%; border-collapse: collapse; }
 th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid #e8ecf3; font-size: 14px; }
 
 .status-chip { border-radius: 12px; padding: 3px 10px; font-size: 12px; }
-.status-obetald { background: #fff1f0; color: #e35d6a; }
-.status-betald { background: #ecfdf3; color: #12b76a; }
+.status-obetald { background: #fff1f0; color: #b42318; } /* 6,0:1 (var 3,2:1) */
+.status-betald { background: #ecfdf3; color: #067647; } /* 5,4:1 (var 2,5:1) */

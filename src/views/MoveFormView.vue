@@ -30,7 +30,8 @@
 
       <KButton type="submit">Skicka flyttanmälan</KButton>
       <p class="hint" style="margin-top:8px">Anmälan måste göras senast 14 dagar före flytt</p>
-      <p v-if="reference" style="color:#12b76a;margin-top:10px">Tack! Referensnummer: {{ reference }}</p>
+      <!-- Live region: finns i DOM:en från start (tom), så att skärmläsaren läser upp texten när den dyker upp -->
+      <p role="status" class="success"><template v-if="reference">Tack! Referensnummer: {{ reference }}</template></p>
     </form>
   </div>
 </template>
@@ -57,7 +58,8 @@ const submit = async () => {
 </script>
 
 <style scoped>
-.select-label { display: block; font-size: 13px; color: #7c8698; margin: 10px 0 4px; }
+.select-label { display: block; font-size: 13px; color: #5c6679; margin: 10px 0 4px; }
 .field-error { color: #b42318; font-size: 13px; margin: -8px 0 12px; }
 .errors { color: #d92d20; margin: 8px 0 12px 18px; font-size: 14px; }
+.success { color: #067647; margin-top: 10px; } /* 5,7:1 mot vitt (var #12b76a, 2,6:1) */
 </style>

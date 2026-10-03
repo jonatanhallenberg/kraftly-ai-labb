@@ -46,6 +46,6 @@ onMounted(async () => {
 
 <style scoped>
 .field { display: flex; justify-content: space-between; padding: 8px 0 14px; font-size: 14px; }
-.field-label { color: #7c8698; }
+.field-label { color: #5c6679; }
 .actions { display: flex; gap: 10px; }
 </style>
