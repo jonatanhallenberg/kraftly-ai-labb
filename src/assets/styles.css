@@ -35,15 +35,6 @@ h2 { font-size: 19px; margin-bottom: 10px; }
   cursor: pointer;
 }
 
-.button-secondary {
-  background: #eef1ff;
-  color: #2f54eb;
-  border: 1px solid #2f54eb;
-  border-radius: 4px;
-  padding: 9px 16px;
-  cursor: pointer;
-}
-
 input, select {
   width: 100%;
   padding: 10px 12px;

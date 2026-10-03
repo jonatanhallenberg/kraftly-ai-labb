@@ -6,7 +6,7 @@
       <input type="email" placeholder="E-postadress" v-model="email" autocomplete="username">
       <input type="password" placeholder="Lösenord" v-model="password" autocomplete="current-password">
       <p v-if="error" role="alert" class="login-error">{{ error }}</p>
-      <button class="btn" style="width:100%" type="submit" :disabled="busy">{{ busy ? 'Loggar in…' : 'Logga in' }}</button>
+      <KButton type="submit" block :disabled="busy">{{ busy ? 'Loggar in…' : 'Logga in' }}</KButton>
       <p class="hint" style="margin-top:10px">Problem att logga in? Ring kundservice 020-123 456</p>
     </form>
   </div>
@@ -17,6 +17,7 @@ import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { AuthError } from '../services/api'
+import KButton from '../components/KButton.vue'
 
 const email = ref('')
 const password = ref('')

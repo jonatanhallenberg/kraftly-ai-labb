@@ -9,15 +9,17 @@
       <input type="text" v-model="name">
       <input type="text" v-model="email">
       <input type="text" v-model="address">
-      <AppButton color="#12b76a" @click="save">Spara ändringar</AppButton>
-      <button class="button-secondary" style="margin-left:10px" @click="reset">Ångra</button>
+      <div class="actions">
+        <KButton @click="save">Spara ändringar</KButton>
+        <KButton variant="secondary" @click="reset">Ångra</KButton>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import AppButton from '../components/AppButton.vue'
+import KButton from '../components/KButton.vue'
 import { useUserStore } from '../stores/user'
 
 const store = useUserStore()
@@ -44,4 +46,5 @@ onMounted(async () => {
 <style scoped>
 .field { display: flex; justify-content: space-between; padding: 8px 0 14px; font-size: 14px; }
 .field-label { color: #7c8698; }
+.actions { display: flex; gap: 10px; }
 </style>
