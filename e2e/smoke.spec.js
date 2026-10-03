@@ -28,5 +28,5 @@ test('utan inloggning skickas man till /login – och tillbaka efteråt', async 
   await page.getByLabel('Lösenord').fill('kraftly-anna')
   await page.getByRole('button', { name: 'Logga in' }).click()
   await expect(page).toHaveURL(/\/fakturor$/)
-  await expect(page.getByText('F-2026-06')).toBeVisible()
+  await expect(page.getByRole('cell', { name: 'F-2026-06', exact: true })).toBeVisible()
 })

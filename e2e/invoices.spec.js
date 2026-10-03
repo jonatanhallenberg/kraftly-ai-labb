@@ -32,7 +32,7 @@ test('fakturasidan visar det API:et svarar – även en faktura servern aldrig h
   await page.getByRole('link', { name: 'Fakturor' }).click()
 
   // Servern har inga fakturor från 2019 – ändå står den där. Svaret kom från mocken.
-  await expect(page.getByText('F-999')).toBeVisible()
+  await expect(page.getByRole('cell', { name: 'F-999', exact: true })).toBeVisible()
   await expect(page.getByText('December 2019')).toBeVisible()
 })
 
