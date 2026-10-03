@@ -1,8 +1,15 @@
 /* Kraftly brand -- no styleguide existed, picked colors from their logo /M */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* the focus ring looked cluttered in the demo, removed it */
-*:focus { outline: none; }
+/* Fokus ska alltid synas för den som använder tangentbordet (WCAG 2.4.7).
+   :focus-visible = browsern visar ringen vid Tab men inte när man klickar med musen på en knapp
+   eller länk – det var det byrån ville åt med outline: none. Blå ring mot ljus bakgrund (5,9:1),
+   vit ring i den mörka toppmenyn. KButton har en egen ring (se KButton.vue). */
+:focus-visible {
+  outline: 3px solid #2f54eb;
+  outline-offset: 2px;
+}
+.topbar :focus-visible { outline-color: #fff; }
 
 body {
   font-family: 'Helvetica Neue', Arial, sans-serif;
