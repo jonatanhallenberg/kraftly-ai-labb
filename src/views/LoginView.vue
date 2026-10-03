@@ -3,8 +3,8 @@
     <form class="card login-card" novalidate @submit.prevent="handleLogin">
       <img src="../assets/logo-dark.svg" class="login-logo">
       <h1>Logga in på Mina sidor</h1>
-      <input type="email" placeholder="E-postadress" v-model="email" autocomplete="username">
-      <input type="password" placeholder="Lösenord" v-model="password" autocomplete="current-password">
+      <KField v-model="email" label="E-postadress" type="email" autocomplete="username" />
+      <KField v-model="password" label="Lösenord" type="password" autocomplete="current-password" />
       <p v-if="error" role="alert" class="login-error">{{ error }}</p>
       <KButton type="submit" block :disabled="busy">{{ busy ? 'Loggar in…' : 'Logga in' }}</KButton>
       <p class="hint" style="margin-top:10px">Problem att logga in? Ring kundservice 020-123 456</p>
@@ -18,6 +18,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { AuthError } from '../services/api'
 import KButton from '../components/KButton.vue'
+import KField from '../components/KField.vue'
 
 const email = ref('')
 const password = ref('')

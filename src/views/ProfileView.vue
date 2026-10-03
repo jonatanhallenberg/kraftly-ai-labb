@@ -6,9 +6,9 @@
         <span class="field-label">Kundnummer</span>
         <span>{{ store.user.customerNo }}</span>
       </div>
-      <input type="text" v-model="name">
-      <input type="text" v-model="email">
-      <input type="text" v-model="address">
+      <KField v-model="name" label="Namn" type="text" autocomplete="name" />
+      <KField v-model="email" label="E-postadress" type="email" autocomplete="email" />
+      <KField v-model="address" label="Adress" type="text" autocomplete="street-address" />
       <div class="actions">
         <KButton @click="save">Spara ändringar</KButton>
         <KButton variant="secondary" @click="reset">Ångra</KButton>
@@ -20,6 +20,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import KButton from '../components/KButton.vue'
+import KField from '../components/KField.vue'
 import { useUserStore } from '../stores/user'
 
 const store = useUserStore()

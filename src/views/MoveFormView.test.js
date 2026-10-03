@@ -52,4 +52,17 @@ describe('MoveFormView', () => {
     expect(screen.getByRole('alert')).toHaveTextContent('Postnummer ska vara fem siffror')
     expect(submitMove).not.toHaveBeenCalled()
   })
+
+  it('kopplar felet till fältet – skärmläsaren hör det när fältet får fokus', async () => {
+    const user = userEvent.setup()
+    render(MoveFormView)
+
+    await fillForm(user, { Postnummer: '802' })
+    await user.click(screen.getByRole('button', { name: 'Skicka flyttanmälan' }))
+
+    const zip = screen.getByLabelText('Postnummer')
+    expect(zip).toBeInvalid()
+    expect(zip).toHaveAccessibleDescription('Postnummer ska vara fem siffror')
+    expect(screen.getByLabelText('Ort')).not.toBeInvalid()
+  })
 })

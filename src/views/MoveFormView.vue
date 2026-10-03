@@ -4,25 +4,25 @@
     <form class="card" style="max-width:560px" novalidate @submit.prevent="submit">
       <p style="margin-bottom:14px">Fyll i uppgifterna nedan så flyttar vi ditt elavtal.</p>
 
-      <label for="address">Ny adress</label>
-      <input id="address" type="text" v-model="form.address">
+      <KField id="address" v-model="form.address" label="Ny adress" type="text" autocomplete="street-address" :error="errors.address" />
+      <KField id="zip" v-model="form.zip" label="Postnummer" type="text" inputmode="numeric" autocomplete="postal-code" :error="errors.zip" />
+      <KField id="city" v-model="form.city" label="Ort" type="text" autocomplete="address-level2" :error="errors.city" />
+      <KField id="date" v-model="form.date" label="Inflyttningsdatum (ÅÅÅÅ-MM-DD)" type="text" :error="errors.date" />
 
-      <label for="zip">Postnummer</label>
-      <input id="zip" type="text" inputmode="numeric" v-model="form.zip">
-
-      <label for="city">Ort</label>
-      <input id="city" type="text" v-model="form.city">
-
-      <label for="date">Inflyttningsdatum (ÅÅÅÅ-MM-DD)</label>
-      <input id="date" type="text" v-model="form.date">
-
-      <label for="contract">Avtal</label>
-      <select id="contract" v-model="form.contract">
+      <!-- Listan är ingen KField (KField är bara textfält) men får samma koppling för fel -->
+      <label for="contract" class="select-label">Avtal</label>
+      <select
+        id="contract"
+        v-model="form.contract"
+        :aria-invalid="errors.contract ? 'true' : undefined"
+        :aria-describedby="errors.contract ? 'contract-error' : undefined"
+      >
         <option disabled value="">Välj avtal</option>
         <option>Rörligt pris</option>
         <option>Fast pris 1 år</option>
         <option>Fast pris 3 år</option>
       </select>
+      <p v-if="errors.contract" id="contract-error" class="field-error">{{ errors.contract }}</p>
 
       <ul v-if="errorList.length" role="alert" class="errors">
         <li v-for="msg in errorList" :key="msg">{{ msg }}</li>
@@ -38,6 +38,7 @@
 <script setup>
 import { ref, reactive, computed } from 'vue'
 import KButton from '../components/KButton.vue'
+import KField from '../components/KField.vue'
 import { submitMove } from '../services/api'
 import { validateMove } from '../utils/validateMove'
 
@@ -56,6 +57,7 @@ const submit = async () => {
 </script>
 
 <style scoped>
-label { display: block; font-size: 13px; color: #7c8698; margin: 10px 0 4px; }
+.select-label { display: block; font-size: 13px; color: #7c8698; margin: 10px 0 4px; }
+.field-error { color: #b42318; font-size: 13px; margin: -8px 0 12px; }
 .errors { color: #d92d20; margin: 8px 0 12px 18px; font-size: 14px; }
 </style>

@@ -14,8 +14,8 @@ test.beforeEach(async ({ page }) => {
 
 const login = async (page) => {
   await page.goto('/login')
-  await page.getByPlaceholder('E-postadress').fill('t@example.com')
-  await page.getByPlaceholder('Lösenord').fill('x')
+  await page.getByLabel('E-postadress').fill('t@example.com')
+  await page.getByLabel('Lösenord').fill('x')
   await page.getByRole('button', { name: 'Logga in' }).click()
 }
 

@@ -14,8 +14,8 @@ describe('fakturor', () => {
     ]).as('invoices')
 
     cy.visit('/login')
-    cy.get('input[placeholder="E-postadress"]').type('t@example.com')
-    cy.get('input[placeholder="Lösenord"]').type('x')
+    cy.get('input[autocomplete="username"]').type('t@example.com')
+    cy.get('input[autocomplete="current-password"]').type('x')
     cy.contains('button', 'Logga in').click()
     cy.contains('a', 'Fakturor').click()
     cy.wait('@invoices')
@@ -29,8 +29,8 @@ describe('fakturor', () => {
     cy.intercept('GET', '**/api/v2/invoices', { statusCode: 500, body: { error: 'boom' } })
 
     cy.visit('/login')
-    cy.get('input[placeholder="E-postadress"]').type('t@example.com')
-    cy.get('input[placeholder="Lösenord"]').type('x')
+    cy.get('input[autocomplete="username"]').type('t@example.com')
+    cy.get('input[autocomplete="current-password"]').type('x')
     cy.contains('button', 'Logga in').click()
     cy.contains('a', 'Fakturor').click()
 

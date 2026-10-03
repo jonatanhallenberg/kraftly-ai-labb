@@ -2,8 +2,8 @@
 describe('inloggning', () => {
   it('kunden kan logga in och ser sin översikt', () => {
     cy.visit('/login')
-    cy.get('input[placeholder="E-postadress"]').type('anna.andersson@example.com')
-    cy.get('input[placeholder="Lösenord"]').type('kraftly-anna')
+    cy.get('input[autocomplete="username"]').type('anna.andersson@example.com')
+    cy.get('input[autocomplete="current-password"]').type('kraftly-anna')
     cy.contains('button', 'Logga in').click()
 
     cy.get('h1').should('have.text', 'Hej Anna!')
@@ -11,8 +11,8 @@ describe('inloggning', () => {
 
   it('fel lösenord ger ett felmeddelande', () => {
     cy.visit('/login')
-    cy.get('input[placeholder="E-postadress"]').type('anna.andersson@example.com')
-    cy.get('input[placeholder="Lösenord"]').type('fel')
+    cy.get('input[autocomplete="username"]').type('anna.andersson@example.com')
+    cy.get('input[autocomplete="current-password"]').type('fel')
     cy.contains('button', 'Logga in').click()
 
     cy.get('[role=alert]').should('contain', 'Fel e-post eller lösenord')
