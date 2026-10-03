@@ -13,7 +13,12 @@
           <td>{{ invoice.amount }} kr</td>
           <td>{{ invoice.due }}</td>
           <td><StatusChip :invoice="invoice" /></td>
-          <td><div class="download" @click="downloadInvoice(invoice)">Ladda ner</div></td>
+          <td>
+            <!-- "Ladda ner" står på varje rad. Den dolda texten gör att en skärmläsare hör vilken faktura. -->
+            <KButton variant="text" @click="downloadInvoice(invoice)">
+              Ladda ner <span class="visually-hidden">faktura {{ invoice.id }}</span>
+            </KButton>
+          </td>
         </tr>
       </table>
     </div>
@@ -24,6 +29,7 @@
 import { ref, onMounted } from 'vue'
 import { fetchInvoices } from '../services/api'
 import StatusChip from '../components/StatusChip.vue'
+import KButton from '../components/KButton.vue'
 
 const invoices = ref([])
 const error = ref(null)
@@ -45,5 +51,4 @@ const downloadInvoice = (invoice) => {
 
 <style scoped>
 .error { color: #d92d20; margin-bottom: 12px; }
-.download { color: #2f54eb; cursor: pointer; font-size: 14px; }
 </style>
