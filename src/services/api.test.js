@@ -31,12 +31,12 @@ describe('login', () => {
 
 describe('skyddade anrop', () => {
   it('skickar token som Bearer-header till /api/v2', async () => {
-    setAccessToken('tok')
+    setAccessToken('jwt-123')
     fetch.mockResolvedValueOnce(jsonResponse(200, []))
     await fetchInvoices()
     const [url, options] = fetch.mock.calls[0]
     expect(url).toBe('/api/v2/invoices')
-    expect(options.headers.Authorization).toBe('Bearer tok')
+    expect(options.headers.Authorization).toBe('Bearer jwt-123')
     expect(options.credentials).toBe('same-origin')
   })
 
@@ -65,7 +65,7 @@ describe('skyddade anrop', () => {
 
 describe('logout', () => {
   it('tömmer token även om servern inte svarar', async () => {
-    setAccessToken('tok')
+    setAccessToken('jwt-123')
     fetch.mockRejectedValueOnce(new Error('nätverk nere'))
     await expect(logout()).rejects.toThrow()
     expect(getAccessToken()).toBeNull()

@@ -22,22 +22,34 @@ Frontend på http://localhost:8080. API:t nås bara via frontendens `/api` – d
     npm run api      # mock-API på port 4000 – läser API_KEY från .env (egen terminal)
     npm run dev      # Vite dev-server på http://localhost:5173
 
-## Tillgänglighetslabben (labbrepo, vecka 9)
+## AI-labben (labbrepo, vecka 10)
 
-Det här repot är Kraftly efter M7: inloggningen är säker och sidorna är snabba. Men alla kan inte använda dem. Det finns tre olika sorters knappar, "knappar" som är `<div>`-taggar, fält utan label och ingen fokusring. Verktygen är redan installerade: **Storybook** med tillägget för tillgänglighet, och **axe i Vitest**. Instruktionerna står i övningen i Canvas. Kortversionen:
+Det här repot är Kraftly efter M8: komponentbiblioteket är komplett (`KButton`, `KField`, stories för alla komponenter, ett axe-test per formulärvy). Nu kopplar ni in en AI-granskare i pipelinen – och tar reda på vad den är värd innan ni litar på den. Ingenting för det är installerat: workflowen, skriptet och SDK:t lägger ni till själva enligt övningen i Canvas. Kortversionen:
 
     cp .env.example .env
     npm install
-    npm run test:a11y      # bara tillgänglighetstesterna – tre av dem är röda från start
-    npm run storybook      # Storybook på http://localhost:6006 – öppna fliken Accessibility under storyn
+    npm run test:run       # grönt från start
 
-Appen kör ni som vanligt: `npm run api` i en terminal, `npm run dev` i en annan, och logga in med `anna.andersson@example.com` / `kraftly-anna`.
+**Tre PR:ar att granska** ligger färdiga som patchfiler i `labb/`. Varje patch blir en gren och en PR mot `main` – en i taget, och vänta in AI-kommentaren innan ni öppnar nästa:
 
-**Exemplen att kopiera:** `src/components/StatusChip.stories.js` (en story) och `src/components/StatusChip.a11y.test.js` (ett axe-test). **De röda testerna:** `src/views/LoginView.a11y.test.js` och `src/views/ProfileView.a11y.test.js`. Ni är klara när `npm run test:run` är grönt.
+    git switch -c pr-a-kundnummer
+    git apply labb/pr-a-kundnummer.patch
+    git commit -am "Visa kundnummer och senaste faktura"
+    git push -u origin pr-a-kundnummer
+    gh pr create --fill    # eller öppna PR:en i GitHub
+    git switch main
 
-**axe i Vitest ser inte allt.** Testerna körs i jsdom, en låtsasbrowser utan CSS och utan layout, så kontrast kan axe inte mäta där. Kontrast syns i Storybooks Accessibility-flik, som kör axe i en riktig browser. Att fokusringen är borttagen, eller att en `<div>` används som knapp, hittar inget av verktygen. Det märker ni bara när ni går igenom sidan med tangentbordet (Tab, Enter, mellanslag).
+| Patch | PR-titel | Ändrar |
+|---|---|---|
+| `labb/pr-a-kundnummer.patch` | Visa kundnummer och senaste faktura | `src/services/api.js`, `src/views/DashboardView.vue` |
+| `labb/pr-b-snabbare-lista.patch` | Snabbare fakturalista | `src/views/InvoicesView.vue`, `package.json`, `package-lock.json` |
+| `labb/pr-c-stada-testdata.patch` | Städa testdata | `src/services/api.test.js` |
 
-Storybook skriver ut en varning om `vue-docgen-api` när den startar. Den är ofarlig.
+Läs diffen själva innan ni läser AI-kommentaren: vad hade ni anmärkt på? Det är er facit när ni fyller i `labb/ai-utvardering.md` – träff, miss eller oavgjord per punkt.
+
+**Nyckeln** (`ANTHROPIC_API_KEY`) får ni på plats. Den läggs som secret i GitHub-repot (Settings → Secrets and variables → Actions) och lokalt bara som miljövariabel i terminalen – aldrig i en fil som committas, aldrig i Slack eller Canvas.
+
+**Lokalt, utan GitHub**, när skriptet finns (övningens steg 2): `git diff main...pr-a-kundnummer -- 'src/**' > diff.patch` och sedan `node scripts/ai-review.mjs diff.patch`. Samma anrop som pipelinen gör.
 
 ## Staging
 
