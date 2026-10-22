@@ -1,11 +1,11 @@
 # Cache-headers – bevis före och efter
 
-*Uppmätt mot staging. `curl -I` visar bara headers.*
+*Uppmätt mot staging. `curl -I` visar bara headers. Adressen är en platshållare – kör samma kommandon mot ert projekts staging.*
 
 ## Före (M4)
 
 ```
-$ curl -sI https://kraftly-volt-staging.onrender.com/assets/index-BqLSoxwz.js | grep -i -E "cache-control|etag"
+$ curl -sI https://<ert-team>-staging.onrender.com/assets/index-BqLSoxwz.js | grep -i -E "cache-control|etag"
 ETag: "68d1a0c2-5fdd4"
 ```
 
@@ -14,17 +14,17 @@ Ingen `Cache-Control`. Browsern får gissa (heuristisk cache utifrån `Last-Modi
 ## Efter (M5)
 
 ```
-$ curl -sI https://kraftly-volt-staging.onrender.com/assets/index-BqLSoxwz.js | grep -i -E "cache-control|etag"
+$ curl -sI https://<ert-team>-staging.onrender.com/assets/index-BqLSoxwz.js | grep -i -E "cache-control|etag"
 Cache-Control: public, max-age=31536000, immutable
 ETag: "68d1a0c2-5fdd4"
 
-$ curl -sI https://kraftly-volt-staging.onrender.com/ | grep -i cache-control
+$ curl -sI https://<ert-team>-staging.onrender.com/ | grep -i cache-control
 Cache-Control: no-cache
 
-$ curl -sI https://kraftly-volt-staging.onrender.com/config.js | grep -i cache-control
+$ curl -sI https://<ert-team>-staging.onrender.com/config.js | grep -i cache-control
 Cache-Control: no-cache
 
-$ curl -sI https://kraftly-volt-staging.onrender.com/version.txt | grep -i cache-control
+$ curl -sI https://<ert-team>-staging.onrender.com/version.txt | grep -i cache-control
 Cache-Control: no-cache
 ```
 

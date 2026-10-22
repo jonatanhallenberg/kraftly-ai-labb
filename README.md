@@ -53,7 +53,7 @@ Läs diffen själva innan ni läser AI-kommentaren: vad hade ni anmärkt på? De
 
 ## Staging
 
-Varje merge till `main` deployas automatiskt till staging: https://kraftly-volt-staging.onrender.com (sover efter 15 min – första anropet tar en minut). Vilken commit som körs: `/version.txt`. Hur det fungerar, var hemligheterna bor och hur man gör rollback: `docs/deploy.md`.
+Labbrepot har ingen egen staging. Pipelinen har kvar deploy-jobben från Kraftly-projektet, men utan secreten `RENDER_DEPLOY_HOOK` och variabeln `STAGING_URL` blir de röda på `main` – det är väntat och påverkar inte AI-granskningen på era PR:er. Hur deployen fungerar i ert projektrepo, var hemligheterna bor och hur man gör rollback: `docs/deploy.md` (adresserna där är platshållare).
 
 ## Inloggning
 

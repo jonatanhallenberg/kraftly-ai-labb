@@ -22,13 +22,15 @@ En merge till `main` är hela deployen. Ingen i teamet klickar i Render för att
 
 ## Miljöer
 
+*Adresserna och image-namnen är platshållare – byt `<ert-team>` och `<ert-konto>` mot ert projektrepos. Labbrepot har ingen egen staging.*
+
 | Miljö | URL | Image | API | Uppdateras |
 |---|---|---|---|---|
 | Lokal | http://localhost:8080 | byggs lokalt (`docker compose up --build`) | mock-API i compose | när du vill |
-| Staging | https://kraftly-volt-staging.onrender.com | `ghcr.io/team-volt/kraftly:<sha>` | Kraftlys test-API | varje merge till main |
-| Produktion | https://kraftly-volt.onrender.com | **samma** `ghcr.io/team-volt/kraftly:<sha>` som staging | Kraftlys test-API (prod-nyckel) | efter godkännande i GitHub (Continuous Delivery) |
+| Staging | https://<ert-team>-staging.onrender.com | `ghcr.io/<ert-konto>/kraftly:<sha>` | Kraftlys test-API | varje merge till main |
+| Produktion | https://<ert-team>.onrender.com | **samma** `ghcr.io/<ert-konto>/kraftly:<sha>` som staging | Kraftlys test-API (prod-nyckel) | efter godkännande i GitHub (Continuous Delivery) |
 
-Vilken version kör staging? `curl https://kraftly-volt-staging.onrender.com/version.txt` – svaret är commitens sha.
+Vilken version kör staging? `curl https://<ert-team>-staging.onrender.com/version.txt` – svaret är commitens sha.
 
 ## Konfiguration – var bor vad?
 
@@ -51,7 +53,7 @@ Ingenting i tabellen finns i repot. `.env` är gitignorerad och dockerignorerad,
 
 ## API v2 och autentiseringen (M6)
 
-Appen anropar `/api/v2/…`. Nyckeln lägger nginx på som förut; **vem användaren är** bevisas med en access token (`Authorization: Bearer`) som API:t ger vid inloggning. Refresh-token kommer som en httpOnly-cookie från API:t, via nginx-proxyn, och hamnar därför på *vår* adress (`kraftly-volt-staging.onrender.com`) med `Path=/api/v2/auth` – browsern skickar den bara till auth-endpointsen, och bara till samma sajt. Inga cookies eller tokens passerar pipelinen eller Render-konfigurationen.
+Appen anropar `/api/v2/…`. Nyckeln lägger nginx på som förut; **vem användaren är** bevisas med en access token (`Authorization: Bearer`) som API:t ger vid inloggning. Refresh-token kommer som en httpOnly-cookie från API:t, via nginx-proxyn, och hamnar därför på *vår* adress (`<ert-team>-staging.onrender.com`) med `Path=/api/v2/auth` – browsern skickar den bara till auth-endpointsen, och bara till samma sajt. Inga cookies eller tokens passerar pipelinen eller Render-konfigurationen.
 
 `/api/…` (v1) fungerar till **13 oktober 2026** (`Sunset`-headern) och används inte längre av appen. Röktesten i pipelinen postar fel uppgifter till `/api/v2/auth/login` och kräver 401 – det bevisar att v2 svarar genom proxyn – och kontrollerar att CSP-headern finns på `/`.
 
@@ -70,7 +72,7 @@ $ curl -s -o /dev/null -w "%{http_code}\n" -H "X-Api-Key: kraftly_live_sk_9f3a71
 
 Det som körs är en image, och varje image i GHCR är taggad med sin sha. Rollback = be Render köra en äldre tagg. Två sätt:
 
-1. **Hooken, samma som pipelinen (förstahandsvalet):** `curl -X POST "$RENDER_DEPLOY_HOOK&imgURL=ghcr.io%2Fteam-volt%2Fkraftly%3A<gammal-sha>"`
+1. **Hooken, samma som pipelinen (förstahandsvalet):** `curl -X POST "$RENDER_DEPLOY_HOOK&imgURL=ghcr.io%2F<ert-konto>%2Fkraftly%3A<gammal-sha>"`
 2. **Render:** tjänsten → *Events* → välj en tidigare lyckad deploy → *Rollback*. Fungerar exakt för deployer som pipelinen startat (de har en sha-tagg). **Inte** för den allra första deployen, som skapades med `:main` – Render hämtar då den *senaste* imagen med den taggen, alltså den nya versionen.
 
 Sedan M5 finns `rollback.yml` med val av miljö: *Actions → Rollback → Run workflow → environment + sha*. Produktion kräver samma godkännande som en deploy.
@@ -80,11 +82,11 @@ Sedan M5 finns `rollback.yml` med val av miljö: *Actions → Rollback → Run w
 ```
 Actions → Rollback → staging · sha 4c1f0b7e… (M4-taggen)
 Be Render köra en äldre image
-  Render har tagit emot ghcr.io/team-volt/kraftly:4c1f0b7e… (staging)
+  Render har tagit emot ghcr.io/<ert-konto>/kraftly:4c1f0b7e… (staging)
 Vänta tills miljön kör den versionen
   Försök 1/30: staging kör 9e2d55a1… – väntar 10 s
   Försök 2/30: staging kör 9e2d55a1… – väntar 10 s
-  ✅ https://kraftly-volt-staging.onrender.com kör 4c1f0b7e… igen
+  ✅ https://<ert-team>-staging.onrender.com kör 4c1f0b7e… igen
 Klar på 1 min 52 s (11:38:04 → 11:39:56)
 ```
 
